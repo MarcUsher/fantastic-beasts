@@ -1,33 +1,43 @@
 {% extends 'base.html' %}
+
+{% block title %}
+All Fantastic Beasts
+{% endblock %}
+
 {% block content %}
 
 <h1>All Fantastic Beasts</h1>
-
+<div class="row">
 {% for beast in beasts %}
-  <div class="card">
-    <a href="{% url 'detail' beast.id %}">
-        <div class="card-content">
-        <span class="card-title">{{ beast.name }}</span>
-        <p><b>Native to:</b> {{ beast.native }}</p>
-        <p><b>Danger Level:</b>  {{ beast.danger }} 
 
-        {% if beast.danger == 1 %}
-            <em>(Boring)</em>
-        {% elif beast.danger == 2 %}
-            <em>(Harmless)</em>
-        {% elif beast.danger == 3 %}
-            <em>(Competent wizard should cope)</em>
-        {% elif beast.danger == 4 %}
-            <em>(Dangerous)</em>
-        {% elif beast.danger == 5 %}
-            <em>(Known wizard killer)</em>
-        {% endif %}
-        </p>
-        <br>
-        <p>Click to find out more</p>
-        </div>
-    </a>
-  </div>
+    <div class="col s12 m6 l4 xl3">
+        <div class="card">
+                <div class="card-image">
+                    <a href="{% url 'detail' beast.id %}"><img alt="Image of Fantastic Beast" src="{{ beast.image }}"></a>
+                    <a href="{% url 'detail' beast.id %}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                  </div>
+                <div class="card-content">
+                <span class="card-title">{{ beast.name }}</span>
+                <p><b>Native to:</b> {{ beast.native }}</p>
+                <p><b>Danger Level:</b>  {{ beast.danger }} 
+        
+                {% if beast.danger == 1 %}
+                    <em>(Boring)</em>
+                {% elif beast.danger == 2 %}
+                    <em>(Harmless)</em>
+                {% elif beast.danger == 3 %}
+                    <em>(Competent wizard should cope)</em>
+                {% elif beast.danger == 4 %}
+                    <em>(Dangerous)</em>
+                {% elif beast.danger == 5 %}
+                    <em>(Known wizard killer)</em>
+                {% endif %}
+                </p>
+                <br>
+                </div>
+          </div>
+    </div>
 {% endfor %}
+</div>
 
 {% endblock %}

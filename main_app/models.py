@@ -7,3 +7,4 @@ class Beast(models.Model):
     description = models.TextField(max_length=500)
     size = models.CharField(max_length=100)
     danger = models.PositiveSmallIntegerField()
+    image = models.URLField(max_length=500)
