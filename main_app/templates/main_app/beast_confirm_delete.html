@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete {{ beast.name }}
+{% endblock %}
+
+{% block content %}
+  <h1>Delete {{ beast.name }}</h1>
+
+  <h4>Are you sure you want to delete <span class="red-text">{{ beast.name }}</span>?</h4>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes - Delete!" class="btn red">
+    <p><a href="{% url 'detail' beast.id %}">Cancel</a></p>
+  </form>
+{% endblock %}

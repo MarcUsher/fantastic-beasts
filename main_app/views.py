@@ -10,7 +10,20 @@ class BeastList(ListView):
     model = Beast
 
 
-# Create your views here.
+class BeastCreate(CreateView):
+    model = Beast
+    fields = '__all__'
+
+class BeastUpdate(UpdateView):
+    model = Beast
+    fields = ['native', 'description', 'size', 'danger']
+
+class BeastDelete(DeleteView):
+    model = Beast
+    success_url = '/beasts/'
+
+# Create your views here
+
 def home(request):
     return render(request, 'home.html')
 

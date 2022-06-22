@@ -22,7 +22,8 @@
           <a href="/" class="left brand-logo">&nbsp;&nbsp;Fantastic Beasts Collector</a>
           <ul class="right">
             <li><a href="{% url 'about' %}"><i class="material-icons left">subject</i>About</a></li>
-            <li><a href="{% url 'index' %}"><i class="material-icons left">view_module</i>Explore Fantastic Beasts</a></li>
+            <li><a href="{% url 'beast_create' %}"><i class="material-icons left">add_circle</i>Add Beast</a></li>
+            <li><a href="{% url 'index' %}"><i class="material-icons left">view_module</i>Explore Beasts</a></li>
           </ul>
           <!-- <a href="#" data-activates="mobile-demo" class="right button-collapse"><i class="material-icons">menu</i></a> -->
         </div>
@@ -37,6 +38,8 @@
     {% block content %}
     {% endblock %}
   </main>
+  <br>
+  <br>
   <footer class="page-footer">
     <div class="container">
       <div class="row">
