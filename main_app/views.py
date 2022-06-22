@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Beast
+from .forms import WalkForm
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -37,4 +38,14 @@ def about(request):
 
 def beasts_detail(request, beast_id):
     beast = Beast.objects.get(id=beast_id)
-    return render(request, 'beasts/detail.html', { 'beast': beast })
+    walk_form = WalkForm()
+    return render(request, 'beasts/detail.html', { 'beast': beast, 'walk_form': walk_form })
+
+
+def add_walk(request, beast_id):
+    form = WalkForm(request.POST)
+    if form.is_valid():
+        new_walk = form.save(commit=False)
+        new_walk.beast_id = beast_id
+        new_walk.save()
+        return redirect('detail', beast_id = beast_id)

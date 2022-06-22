@@ -29,6 +29,9 @@ class Beast(models.Model):
     class Meta:
         ordering = ['name']
 
+    def exercised_today(self):
+        return self.walk_set.filter(date=date.today()).count() >= 1
+
 
 
 class Walk(models.Model):
@@ -38,3 +41,7 @@ class Walk(models.Model):
 
     def __str__(self):
         return f"{self.get_distance_display()} on {self.date}"
+
+    class Meta:
+        ordering = ['-date']
+
