@@ -8,37 +8,46 @@
 
 <h1>Beast Details</h1>
 <div class="row">
-    <div class="col s12 m6">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ beast.name }}</span>
-                <p><b>Native to:</b> {{ beast.native }}</p>
-                <p><b>Description:</b> {{ beast.description }}</p>
-                <p><b>Size:</b> {{ beast.size }}</p>
-                <p><b>Danger Level:</b>  {{ beast.danger }} 
-
-                {% if beast.danger == 1 %}
-                    <em>(Boring)</em>
-                {% elif beast.danger == 2 %}
-                    <em>(Harmless)</em>
-                {% elif beast.danger == 3 %}
-                    <em>(Competent wizard should cope)</em>
-                {% elif beast.danger == 4 %}
-                    <em>(Dangerous)</em>
-                {% elif beast.danger == 5 %}
-                    <em>(Known wizard killer)</em>
-                {% else %}
-                    <em>Unknown level</em>
-                {% endif %}
-                </p>
+    <div class="col s12">
+        <div class="card horizontal">
+            <div class="card-image">
+                <img alt="Image of Fantastic Beast" src="{{ beast.image }}">
             </div>
-            <div class="card-action">
-                <a href="{% url 'beast_update' beast.id %}">Edit</a>
-                <a href="{% url 'beast_delete' beast.id %}">Delete</a>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <span class="card-title">{{ beast.name }}</span>
+                    <p><b>Native to:</b> {{ beast.native }}</p>
+                    <p><b>Description:</b> {{ beast.description }}</p>
+                    <p><b>Size:</b> {{ beast.size }}</p>
+                    <p><b>Danger Level:</b>  {{ beast.danger }} 
+    
+                    {% if beast.danger == 1 %}
+                        <em>(Boring)</em>
+                    {% elif beast.danger == 2 %}
+                        <em>(Harmless)</em>
+                    {% elif beast.danger == 3 %}
+                        <em>(Competent wizard should cope)</em>
+                    {% elif beast.danger == 4 %}
+                        <em>(Dangerous)</em>
+                    {% elif beast.danger == 5 %}
+                        <em>(Known wizard killer)</em>
+                    {% else %}
+                        <em>Unknown level</em>
+                    {% endif %}
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a href="{% url 'beast_update' beast.id %}">Edit</a>
+                    <a href="{% url 'beast_delete' beast.id %}">Delete</a>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="row">
     <div class="col s12 m6">
+        <h3>Give {{ beast.name }}s Exercise</h3>
         <form action="{% url 'add_walk' beast.id %}" method="post">
             {% csrf_token %}
             {{ walk_form.as_p }}
@@ -46,25 +55,89 @@
         </form>
         <br>
             {% if beast.exercised_today %}
-            <div class="card-panel teal-text center-align">The {{beast.name}} has exercised today</div>
+            <div class="card-panel teal-text center-align">The {{beast.name}}s have exercised today</div>
             {% else %}
-            <div class="card-panel red-text center-align">The {{beast.name}} might need to go for a walk/fly/swim!</div>
+            <div class="card-panel red-text center-align">The {{beast.name}}s might need to go for a walk/fly/swim!</div>
             {% endif %}
         <br>
+    </div>
+    <div class="col s12 m6">
+        <h3>Excercise Record</h3>
         <table class="striped">
-          <thead>
-            <tr><th>Date</th><th>Exercise</th></tr>
-          </thead>
-          <tbody>
-            {% for walk in beast.walk_set.all %}
-              <tr>
-                <td>{{walk.date}}</td>
-                <td>{{walk.get_distance_display}}</td>
-              </tr>
+            <thead>
+              <tr><th>Date</th><th>Exercise</th></tr>
+            </thead>
+            <tbody>
+              {% for walk in beast.walk_set.all %}
+                <tr>
+                  <td>{{walk.date}}</td>
+                  <td>{{walk.get_distance_display}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+
+
+<a name="locations"></a>
+
+<div class="row">
+    <div class="col s6">
+        <h3>Current Hiding Places</h3>
+
+        {% if beast.locations.count %}
+            {% for location in beast.locations.all %}
+                <div class="card amber lighten-1 z-depth-2">
+                    <div class="card-content">
+                        <span class="card-title">
+                            {{ location.name }}
+                        </span>
+                        <p><b>Environment:</b> {{ location.get_environment_display }}</p>
+                    </div>
+                    <div class="card-action">
+                        <form action="{% url 'disassoc_location' beast.id location.id %}#locations" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn amber darken-4">Remove</button>
+                        </form>
+                    </div>
+                </div>
             {% endfor %}
-          </tbody>
-        </table>
-      </div>
+
+        {% else %}
+            <h5>The {{beast.name}}s are nowhere to be found!</h5>
+        {% endif %}
+    </div>
+    <div class="col s6">
+        <h3>Available Hiding Places</h3>
+        {% if locations.count %}
+            
+            {% for location in locations.all %}
+                <div class="card amber lighten-1 z-depth-2">
+                    <div class="card-content">
+                        <span class="card-title">
+                            {{ location.name }}
+                        </span>
+                        <p><b>Environment:</b> {{ location.get_environment_display }}</p>
+                    </div>
+                    <div class="card-action">
+                        <form action="{% url 'assoc_location' beast.id location.id %}#locations" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn amber darken-4">Add</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% else %}
+
+            <h5>The {{beast.name}}s have nowhere else to hide!</h5>
+
+        {% endif %}
+        
+
+    </div>
+
 </div>
 
 <script>

@@ -12,6 +12,6 @@ Delete {{ beast.name }}
   <form action="" method="POST">
     {% csrf_token %}
     <input type="submit" value="Yes - Delete!" class="btn red">
-    <p><a href="{% url 'detail' beast.id %}">Cancel</a></p>
+    <p><a href="{% url 'beast_detail' beast.id %}">Cancel</a></p>
   </form>
 {% endblock %}

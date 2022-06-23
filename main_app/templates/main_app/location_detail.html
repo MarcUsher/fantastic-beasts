@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ location.name }}: Details
+{% endblock %}
+
+{% block content %}
+
+<h1>Location Details</h1>
+
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ location.name }}</span>
+                <p><b>Environment:</b> {{ location.get_environment_display }}</p>
+                <p><b>Description:</b> {{ location.description }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'location_update' location.id %}">Edit</a>
+                <a href="{% url 'location_delete' location.id %}">Delete</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
