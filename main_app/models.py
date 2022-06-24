@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
+
+
 
 DISTANCES = (
     ('S', 'Short Walk'),
@@ -19,8 +22,10 @@ ENVIRONMENTS = (
     ('U', 'Underground'),
 )
 
+
 # Create your models here.
 
+# LOCATION Model
 
 class Location(models.Model):
     name = models.CharField(max_length=100)
@@ -39,6 +44,8 @@ class Location(models.Model):
 
 
 
+# BEAST Model
+
 class Beast(models.Model):
     name = models.CharField(max_length=100)
     native = models.CharField(max_length=150)
@@ -47,12 +54,13 @@ class Beast(models.Model):
     danger = models.PositiveSmallIntegerField()
     image = models.URLField(max_length=500)
     locations = models.ManyToManyField(Location)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'beast_id': self.id})
+        return reverse('beast_detail', kwargs={'beast_id': self.id})
 
     class Meta:
         ordering = ['name']
@@ -61,6 +69,8 @@ class Beast(models.Model):
         return self.walk_set.filter(date=date.today()).count() >= 1
 
 
+
+# WALK Model
 
 class Walk(models.Model):
     date = models.DateField("Exercise Date")

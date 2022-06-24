@@ -16,28 +16,33 @@
 </head>
 <body>
   <header>
-    <!-- <ul id="dropdown1" class="dropdown-content">
-      <li><a href="{% url 'about' %}">About</a></li>
-      <li><a href="{% url 'beast_index' %}">Explore Fantastic Beasts</a></li>
-      <li><a href="{% url 'location_create' %}">Add Location</a></li>
-      <li><a href="{% url 'location_index' %}">Explore Locations</a></li>
-    </ul> -->
     <div class="navbar">
       <nav class="nav-extended">
         <div class="nav-wrapper">
           <a href="/" class="left brand-logo">&nbsp;&nbsp;Fantastic Beasts Collector</a>
           <ul class="right">
-            <!-- <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Menu</a></li> -->
             <li><a href="{% url 'about' %}"><i class="material-icons left">subject</i>About</a></li>
-            <li><a href="{% url 'beast_create' %}"><i class="material-icons left">add_circle</i>Add Beast</a></li>
-            <li><a href="{% url 'beast_index' %}"><i class="material-icons left">view_module</i>Explore Beasts</a></li>
-            <li><a href="{% url 'location_create' %}"><i class="material-icons left">add_circle</i>Add Location</a></li>
-            <li><a href="{% url 'location_index' %}"><i class="material-icons left">view_module</i>Explore Locations</a></li>
+
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'beast_create' %}"><i class="material-icons left">add_circle</i>Add Beast</a></li>
+              <li><a href="{% url 'beast_index' %}"><i class="material-icons left">view_module</i>Explore Beasts</a></li>
+              <li><a href="{% url 'location_create' %}"><i class="material-icons left">add_circle</i>Add Location</a></li>
+              <li><a href="{% url 'location_index' %}"><i class="material-icons left">view_module</i>Explore Locations</a></li>
+              <li><a href="{% url 'logout' %}"><i class="material-icons left">person_outline</i>Log Out</a></li>
+            {% else %}
+              <li><a href="{% url 'signup' %}"><i class="material-icons left">person_add</i>Sign Up</a></li>
+              <li><a href="{% url 'login' %}"><i class="material-icons left">person_outline</i>Log In</a></li>
+            {% endif %}
           </ul>
+
+          <!-- Trigger for mobile nav - NOT WORKING -->
           <!-- <a href="#" data-activates="mobile-demo" class="right sidenav-trigger"><i class="material-icons">menu</i></a> -->
+
         </div>
       </nav>
     </div>
+
+    <!-- Mobile sidenav bar - NOT WORKING -->
     <!-- <ul class="sidenav" id="mobile-demo">
       <li><a href="{% url 'about' %}">About</a></li>
       <li><a href="{% url 'beast_index' %}">Explore Fantastic Beasts</a></li>

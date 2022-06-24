@@ -28,4 +28,8 @@ urlpatterns = [
 
     # Disassociate location from beast (M:M)
     path('beasts/<int:beast_id>/disassoc_location/<int:location_id>/', views.disassoc_location, name='disassoc_location'),
+
+    #Sign Up Path
+    path('accounts/signup/', views.signup, name='signup'),
+    path('accounts/password_change/', views.PasswordResetByUser.as_view(), name='password_change')
 ]
